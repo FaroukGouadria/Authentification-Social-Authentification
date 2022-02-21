@@ -17,3 +17,19 @@ export class CreateUserInput {
 
 @InputType()
 export class UpdateUserInput extends PartialType(OmitType(CreateUserInput, ["password", "createdAt"] as const)) {}
+
+@InputType()
+export class CreateUserInputSocial {
+  @Field()
+  firstName: string;
+  @Field()
+  lastName: string;
+  @Field()
+  email: string;
+  @Field()
+  accessToken:string;
+  @Field()
+  picture:string;
+  @Field()
+  createdAt: string = new Date().toISOString();
+}

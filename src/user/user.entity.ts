@@ -12,7 +12,6 @@ registerEnumType(Roles,{
     description:'Roles for admin creating project and users'
 })
 
-
 @ObjectType()
 @Schema()
 export class User{
@@ -30,7 +29,7 @@ export class User{
    @Field(()=>String)
   @Prop()
   password:string;
-  
+
    @Field(()=>String)
   @Prop()
   email:string;
@@ -38,6 +37,14 @@ export class User{
   @Field(()=>String)
   @Prop()
   createdAt:string;
+
+  @Field(()=>String)
+  @Prop()
+  picture:string;
+
+   @Field(()=>String)
+  @Prop()
+  accessToken:string;
 
     @Field(()=>Roles,{defaultValue:Roles.Admin,nullable:true})
     @Prop()
