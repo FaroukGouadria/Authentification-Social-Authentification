@@ -45,10 +45,14 @@ export class User{
    @Field(()=>String)
   @Prop()
   accessToken:string;
+   @Field({ defaultValue: false })
+   @Prop()
+   isEmailConfirmed: boolean;
 
     @Field(()=>Roles,{defaultValue:Roles.Admin,nullable:true})
     @Prop()
     roles?:string;
+    
 }
 export type UserDocument = User & Document;
 export const UserSchema = SchemaFactory.createForClass(User);

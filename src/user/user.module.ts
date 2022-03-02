@@ -8,6 +8,8 @@ import { JwtModule } from '@nestjs/jwt';
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import { GoogleStrategy } from '../auth/strategy/google.strategy';
 import { AuthService } from '../auth/auth.service';
+import { AuthModule } from '../auth/auth.module';
+import { ConfirmUserResolver } from './confirmRegister';
 
 @Module({
   imports:[
@@ -24,9 +26,9 @@ import { AuthService } from '../auth/auth.service';
         name: User.name,
         schema: UserSchema
       }
-    ])
+    ]),
   ],
-  providers: [UserService, UserResolver,JwtStrategy],
+  providers: [UserService, UserResolver,JwtStrategy,ConfirmUserResolver],
   exports:[UserService,UserModule]
 })
 export class UserModule {}

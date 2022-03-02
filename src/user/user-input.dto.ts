@@ -13,6 +13,8 @@ export class CreateUserInput {
   password: string;
   @Field()
   createdAt: string = new Date().toISOString();
+  @Field({defaultValue:false})
+  isEmailConfirmed:boolean;
 }
 
 @InputType()
@@ -21,15 +23,5 @@ export class UpdateUserInput extends PartialType(OmitType(CreateUserInput, ["pas
 @InputType()
 export class CreateUserInputSocial {
   @Field()
-  firstName: string;
-  @Field()
-  lastName: string;
-  @Field()
   email: string;
-  @Field()
-  accessToken:string;
-  @Field()
-  picture:string;
-  @Field()
-  createdAt: string = new Date().toISOString();
 }

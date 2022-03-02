@@ -6,13 +6,15 @@ import {Types}from 'mongoose';
 import { CurrentUser } from './user.decorator';
 import { GqlAuthGuard } from '../guards/uers.guard';
 import { UseGuards } from '@nestjs/common';
+import { redis } from '../redis';
 @Resolver()
 export class UserResolver {
     constructor(
-        private userService:UserService
+        private userService:UserService,
+        
     ){}
 
-    @Mutation(()=>User)
+    @Mutation(()=>String)
   async createUser(@Args('createUserInput') createUserInput:CreateUserInput){
     try{  
       return await this.userService.createUser(createUserInput)
@@ -21,10 +23,13 @@ export class UserResolver {
     }
   }
 
+    
+
+
    @Mutation(()=>String)
    async login (
-      @Args('email') email:string,
-      @Args('password') password:string,
+        @Args('email') email:string,
+        @Args('password') password:string,
    ){
      try{
        return await this.userService
@@ -88,6 +93,23 @@ export class UserResolver {
       return await this.userService.findOne(user._id);
     } catch (err) {
       console.error(err);
+    }
+  }
+  @Mutation(() => Boolean)
+  async confirmUser(@Args("token")token : string,_id):Promise<boolean> {
+    try {
+        let userId = await redis.get(token);
+        const user=await this.userService.findOne(_id);
+        console.log(token);
+      if(!userId){
+          return false;
+      }
+      
+      await this.userService.updateUser({_id:token},{isEmailConfirmed:true});
+      await redis.del(token);
+      return true;
+    } catch (err) {
+      console.log(err);
     }
   }
 }

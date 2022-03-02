@@ -8,7 +8,7 @@ import { CreateUserInputSocial } from '../user/user-input.dto';
 @Injectable()
 export class AuthService {
     constructor(
-         @Inject(forwardRef(() => UserService)) private userService: UserService,
+          @Inject(forwardRef(() => UserService)) private userService: UserService,
     ){}
     async googleLogin(req) {
      if (!req.user) {
